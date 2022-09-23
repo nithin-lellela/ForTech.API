@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# CS8897: Static types cannot be used as parameters
+dotnet_diagnostic.CS8897.severity = none
