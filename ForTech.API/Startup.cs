@@ -36,6 +36,8 @@ namespace ForTech.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IChannelRepository, ChannelRepository>();
+            services.AddScoped<IForumRepository, ForumRepository>();    
+            services.AddScoped<IReplyRepository, ReplyRepository>();
 
             services.AddDbContext<ApplicationDBContext>(options =>
             {

@@ -14,5 +14,9 @@ namespace ForTech.Data
 
         public DbSet<Channel> Channel { get; set; }
         public DbSet<UserFavouriteChannels> FavouriteChannels { get; set; }
+        public DbSet<Forum> Forum { get; set; }
+        public DbSet<ForumUpvote> ForumUpvotes { get; set; }
+        public DbSet<ForumReply> ForumReply { get; set; }
+        public DbSet<ReplyUpvote> ReplyUpvotes { get; set; }
     }
 }

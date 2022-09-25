@@ -23,7 +23,7 @@ namespace ForTech.API.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
+        /*[HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
             var rng = new Random();
@@ -34,6 +34,6 @@ namespace ForTech.API.Controllers
                 Summary = Summaries[rng.Next(Summaries.Length)]
             })
             .ToArray();
-        }
+        }*/
     }
 }
