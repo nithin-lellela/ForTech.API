@@ -82,6 +82,15 @@ namespace ForTech.API
                 options.TokenLifespan = TimeSpan.FromHours(1);
             });
 
+            services.AddCors(options => {
+                options.AddPolicy(name: "ForTech", builder =>
+                {
+                    builder.AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowAnyOrigin();
+                });
+            });
+
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -106,6 +115,7 @@ namespace ForTech.API
 
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseCors("ForTech");
 
             app.UseEndpoints(endpoints =>
             {

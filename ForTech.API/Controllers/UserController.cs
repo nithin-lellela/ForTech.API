@@ -45,10 +45,12 @@ namespace ForTech.API.Controllers
                         {
                             Email = userRegisterRequestDTO.Email,
                             UserName = userRegisterRequestDTO.Email,
-                            Name = userRegisterRequestDTO.Name,
+                            Name = userRegisterRequestDTO.FirstName + " " + userRegisterRequestDTO.LastName,
                             DateCreated = System.DateTime.Now,
                             Role = userRegisterRequestDTO.Role,
                             City = userRegisterRequestDTO.City,
+                            Skills = userRegisterRequestDTO.Skills,
+                            Phone = userRegisterRequestDTO.PhoneNumber,
                             Score = 0,
                             ProfileImageUrl = userRegisterRequestDTO.ProfileImageUrl,
                             Tier = ""

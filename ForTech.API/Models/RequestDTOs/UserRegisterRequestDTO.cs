@@ -5,7 +5,9 @@ namespace ForTech.API.Models.RequestDTOs
     public class UserRegisterRequestDTO
     {
         [Required]
-        public string Name { get; set; }
+        public string FirstName { get; set; }
+        [Required]
+        public string LastName { get; set; }
         [Required]
         [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string Email { get; set; }
@@ -16,6 +18,10 @@ namespace ForTech.API.Models.RequestDTOs
         public string Role { get; set; }
         [Required]
         public string City { get; set; }
+        [Required]
+        public string Skills { get; set; }
+        [Required]
+        public string PhoneNumber { get; set; }
         [Required]
         public string ProfileImageUrl { get; set; }
     }

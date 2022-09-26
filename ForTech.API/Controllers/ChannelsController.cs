@@ -140,12 +140,12 @@ namespace ForTech.API.Controllers
         }
 
         [HttpGet("GetUserFavourites/{id}")]
-        public async Task<IActionResult> GetUserFavourites(string Id)
+        public async Task<IActionResult> GetUserFavourites(string id)
         {
-            var isUserExists = await _userManager.FindByIdAsync(Id);
+            var isUserExists = await _userManager.FindByIdAsync(id);
             if(isUserExists != null)
             {
-                var userFavourites = await _channelRepo.GetAllUserFavouriteChannels(Id);
+                var userFavourites = await _channelRepo.GetAllUserFavouriteChannels(id);
                 return Ok(new AuthResponseModel()
                 {
                     ResponseCode = ResponseCode.Ok,
