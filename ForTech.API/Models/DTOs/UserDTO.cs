@@ -14,5 +14,8 @@ namespace ForTech.API.Models.DTOs
         public int Score { get; set; }
         public string ProfileImageUrl { get; set; }
         public string Token { get; set; }
+        public int Experience { get; set; }
+        public string Skills { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }

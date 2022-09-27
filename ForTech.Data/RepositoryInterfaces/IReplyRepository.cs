@@ -13,6 +13,7 @@ namespace ForTech.Data.RepositoryInterfaces
         Task<List<ForumReply>> GetAllRepliesByForum(Guid ForumId);
         Task<ForumReply> GetForumReply(Guid ReplyId);
         Task<bool> DeleteForum(Guid ReplyId);
+        Task<int> GetUpvotesForUserReplies(string UserId);
         Task<ReplyUpvote> AddReplyUpvote(ReplyUpvote ReplyUpvote);
         Task<bool> DeleteReplyUpvote(Guid forumReplyId, string userId);
         Task<ForumReply> UpdateForumReplyUpvotes(Guid Id, bool isVoted);

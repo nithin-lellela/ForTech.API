@@ -54,7 +54,8 @@ namespace ForTech.API.Controllers
                         Description = addForumReply.Description,
                         DateCreated = addForumReply.DateCreated,
                         ForumReplyUpvotes = addForumReply.ForumReplyUpvotes,
-                        IsLiked = _replyRepository.IsReplyLiked(addForumReply.Id, addForumReply.UserId).Result
+                        IsLiked = _replyRepository.IsReplyLiked(addForumReply.Id, addForumReply.UserId).Result,
+                        ProfileImageUrl = _userManager.FindByIdAsync(addForumReply.UserId).Result.ProfileImageUrl,
                     };
                     return Ok(new AuthResponseModel()
                     {
@@ -94,7 +95,8 @@ namespace ForTech.API.Controllers
                     Description = x.Description,
                     DateCreated = x.DateCreated,
                     ForumReplyUpvotes = x.ForumReplyUpvotes,
-                    IsLiked = _replyRepository.IsReplyLiked(x.Id, userId).Result
+                    IsLiked = _replyRepository.IsReplyLiked(x.Id, userId).Result,
+                    ProfileImageUrl = _userManager.FindByIdAsync(x.UserId).Result.ProfileImageUrl,
                 });
                 return Ok(new AuthResponseModel()
                 {

@@ -14,5 +14,6 @@ namespace ForTech.Core
         public string ProfileImageUrl { get; set; }
         public string Skills { get; set; }
         public string Phone{ get; set; }
+        public int Experience { get; set; }
     }
 }

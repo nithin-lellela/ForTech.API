@@ -75,6 +75,17 @@ namespace ForTech.Data.Repositories
             return 0;
         }
 
+        public async Task<int> GetUpvotesForUserReplies(string UserId)
+        {
+            var userReplies = await _dbContext.ForumReply.AsNoTracking().Where(x => x.UserId == UserId).ToListAsync();
+            int score = 0;
+            foreach(var reply in userReplies)
+            {
+                score = score + reply.ForumReplyUpvotes;
+            }
+            return score;
+        }
+
         public async Task<bool> IsReplyLiked(Guid Id, string userId)
         {
             var reply = await _dbContext.ReplyUpvotes.Where(x => x.ForumReplyId == Id).Where(x => x.UserId == userId).ToListAsync();

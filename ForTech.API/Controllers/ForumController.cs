@@ -113,7 +113,8 @@ namespace ForTech.API.Controllers
                         DateCreated = x.DataCreated,
                         ForumUpvotes = x.ForumUpvotes,
                         ForumReplies = x.ForumReplies,
-                        IsLiked = _forumRepository.IsForumLiked(userId, x.Id).Result
+                        IsLiked = _forumRepository.IsForumLiked(userId, x.Id).Result,
+                        ProfileImageUrl = _userManager.FindByIdAsync(x.UserId).Result.ProfileImageUrl
                     });
                     return Ok(new AuthResponseModel()
                     {
@@ -135,7 +136,8 @@ namespace ForTech.API.Controllers
                         DateCreated = x.DataCreated,
                         ForumUpvotes = x.ForumUpvotes,
                         ForumReplies = x.ForumReplies,
-                        IsLiked = _forumRepository.IsForumLiked(userId, x.Id).Result
+                        IsLiked = _forumRepository.IsForumLiked(userId, x.Id).Result,
+                        ProfileImageUrl = _userManager.FindByIdAsync(x.UserId).Result.ProfileImageUrl
                     });
                     return Ok(new AuthResponseModel()
                     {
@@ -159,7 +161,8 @@ namespace ForTech.API.Controllers
                         DateCreated = x.DataCreated,
                         ForumUpvotes = x.ForumUpvotes,
                         ForumReplies = x.ForumReplies,
-                        IsLiked = _forumRepository.IsForumLiked(userId, x.Id).Result
+                        IsLiked = _forumRepository.IsForumLiked(userId, x.Id).Result,
+                        ProfileImageUrl = _userManager.FindByIdAsync(x.UserId).Result.ProfileImageUrl
                     });
                     return Ok(new AuthResponseModel()
                     {
@@ -207,7 +210,8 @@ namespace ForTech.API.Controllers
                         DateCreated = x.DataCreated,
                         ForumUpvotes = x.ForumUpvotes,
                         ForumReplies = x.ForumReplies,
-                        IsLiked = _forumRepository.IsForumLiked(userId, x.Id).Result
+                        IsLiked = _forumRepository.IsForumLiked(userId, x.Id).Result,
+                        ProfileImageUrl = _userManager.FindByIdAsync(x.UserId).Result.ProfileImageUrl
                     });
                     return Ok(new AuthResponseModel()
                     {
@@ -244,7 +248,8 @@ namespace ForTech.API.Controllers
                     DateCreated = x.DataCreated,
                     ForumUpvotes = x.ForumUpvotes,
                     ForumReplies = x.ForumReplies,
-                    IsLiked = _forumRepository.IsForumLiked(userId, x.Id).Result
+                    IsLiked = _forumRepository.IsForumLiked(userId, x.Id).Result,
+                    ProfileImageUrl = _userManager.FindByIdAsync(x.UserId).Result.ProfileImageUrl
                 });
                 return Ok(new AuthResponseModel()
                 {
@@ -278,7 +283,8 @@ namespace ForTech.API.Controllers
                     DateCreated = forum.DataCreated,
                     ForumUpvotes = forum.ForumUpvotes,
                     ForumReplies = forum.ForumReplies,
-                    IsLiked = _forumRepository.IsForumLiked(userId, id).Result
+                    IsLiked = _forumRepository.IsForumLiked(userId, id).Result,
+                    ProfileImageUrl = _userManager.FindByIdAsync(forum.UserId).Result.ProfileImageUrl
                 };
                 return Ok(new AuthResponseModel()
                 {

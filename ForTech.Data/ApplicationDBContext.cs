@@ -18,5 +18,6 @@ namespace ForTech.Data
         public DbSet<ForumUpvote> ForumUpvotes { get; set; }
         public DbSet<ForumReply> ForumReply { get; set; }
         public DbSet<ReplyUpvote> ReplyUpvotes { get; set; }
+        public DbSet<Refer> Refers { get; set; }
     }
 }

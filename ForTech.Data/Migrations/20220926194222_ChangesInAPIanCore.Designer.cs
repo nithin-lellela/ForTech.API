@@ -4,14 +4,16 @@ using ForTech.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ForTech.Data.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20220926194222_ChangesInAPIanCore")]
+    partial class ChangesInAPIanCore
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -115,32 +117,6 @@ namespace ForTech.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ForumUpvotes");
-                });
-
-            modelBuilder.Entity("ForTech.Core.Refer", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("ForumId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("IsReferOpened")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ReceiverUserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SenderUserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Refers");
                 });
 
             modelBuilder.Entity("ForTech.Core.ReplyUpvote", b =>

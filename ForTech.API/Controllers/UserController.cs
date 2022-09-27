@@ -2,11 +2,13 @@
 using ForTech.API.Models.DTOs;
 using ForTech.API.Models.RequestDTOs;
 using ForTech.Core;
+using ForTech.Data.RepositoryInterfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -24,10 +26,12 @@ namespace ForTech.API.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly IConfiguration _configuration;
-        public UserController(UserManager<User> UserManager, IConfiguration Configuration)
+        private readonly IReplyRepository _replyRepository;
+        public UserController(UserManager<User> UserManager, IConfiguration Configuration, IReplyRepository replyRepository)
         {
             _userManager = UserManager;
             _configuration = Configuration;
+            _replyRepository = replyRepository;
         }
 
         [HttpPost("Register")]
@@ -69,6 +73,9 @@ namespace ForTech.API.Controllers
                                 Score = user.Score,
                                 ProfileImageUrl = user.ProfileImageUrl,
                                 Tier = user.Tier,
+                                Skills = user.Skills,
+                                PhoneNumber = user.Phone,
+                                Experience = user.Experience,
                                 Token = GenerateToken(user)
                             };
                             return Ok(new AuthResponseModel()
@@ -145,6 +152,9 @@ namespace ForTech.API.Controllers
                     Score = isUserExists.Score,
                     ProfileImageUrl = isUserExists.ProfileImageUrl,
                     Tier = isUserExists.Tier,
+                    Skills = isUserExists.Skills,
+                    PhoneNumber = isUserExists.Phone,
+                    Experience = isUserExists.Experience,
                     Token = GenerateToken(isUserExists),
 
                 };
@@ -178,11 +188,44 @@ namespace ForTech.API.Controllers
                 Score = x.Score,
                 Tier = x.Tier,
                 ProfileImageUrl=x.ProfileImageUrl,
+                Skills = x.Skills,
+                PhoneNumber = x.Phone,
+                Experience = x.Experience
             });
             return Ok(new AuthResponseModel()
             {
                 ResponseCode = ResponseCode.Ok,
                 ResponseMessage = "All Users",
+                DataSet = users
+            });
+        }
+
+        [HttpPut("UpdateUserScore")]
+        public async Task<IActionResult> UpdateUserScore()
+        {
+            var users = await _userManager.Users.ToListAsync();
+            foreach(var user in users)
+            {
+                var score = await _replyRepository.GetUpvotesForUserReplies(user.Id);
+                user.Score = score;
+                await _userManager.UpdateAsync(user);
+            }
+            return Ok(new AuthResponseModel()
+            {
+                ResponseCode= ResponseCode.Ok,
+                ResponseMessage= "User Scores have been updated",
+                DataSet = null
+            });
+        }
+
+        [HttpGet("GetTopUsers")]
+        public async Task<IActionResult> GetTopUsers()
+        {
+            var users = await _userManager.Users.OrderByDescending(x => x.Score).ToListAsync();
+            return Ok(new AuthResponseModel()
+            {
+                ResponseCode = ResponseCode.Ok,
+                ResponseMessage = "Top Users",
                 DataSet = users
             });
         }
@@ -216,6 +259,9 @@ namespace ForTech.API.Controllers
                     Score = user.Score,
                     ProfileImageUrl = user.ProfileImageUrl,
                     Tier = user.Tier,
+                    Skills = user.Skills,
+                    PhoneNumber = user.Phone,
+                    Experience = user.Experience
                 }
             });
         }

@@ -12,5 +12,6 @@ namespace ForTech.API.Models.DTOs
         public DateTime DateCreated { get; set; }
         public int ForumReplyUpvotes { get; set; }
         public bool IsLiked { get; set; }
+        public string ProfileImageUrl { get; set; }
     }
 }
