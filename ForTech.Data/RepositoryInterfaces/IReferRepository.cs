@@ -13,5 +13,6 @@ namespace ForTech.Data.RepositoryInterfaces
         Task<List<Refer>> GetReceivedRefers(string ReceiverId);
         Task<List<Refer>> GetSentRefers(string SentId);
         Task<bool> UpdateIsOpenedRefer(Guid ReferId);
+        Task<bool> RemoveRefer(Guid id);
     }
 }

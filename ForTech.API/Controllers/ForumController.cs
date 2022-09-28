@@ -125,6 +125,7 @@ namespace ForTech.API.Controllers
                 }else if(filter == "Top")
                 {
                     var forums = await _forumRepository.GetTopForumsByChannelId(ChannelId);
+                    forums.Reverse();
                     var forumDTO = forums.Select(x => new ForumDTO()
                     {
                         Id = x.Id,
@@ -148,8 +149,33 @@ namespace ForTech.API.Controllers
                 }else if(filter == "Recent")
                 {
                     var forums = await _forumRepository.GetAllForumsByChannelId(ChannelId);
-                    forums.Sort((x, y) => DateTime.Compare(x.DataCreated, y.DataCreated));
+                    forums = forums.OrderBy(x => x.DataCreated).ToList();
+                    //forums.Sort((x, y) => DateTime.Compare(x.DataCreated, y.DataCreated));
                     forums.Reverse();
+                    var forumDTO = forums.Select(x => new ForumDTO()
+                    {
+                        Id = x.Id,
+                        ChannelId = x.ChannelId,
+                        UserId = x.UserId,
+                        UserName = _userManager.FindByIdAsync(x.UserId).Result.Name,
+                        ChannelName = _channelRepository.GetChannel(x.ChannelId).Result.ChannelName,
+                        Description = x.Description,
+                        DateCreated = x.DataCreated,
+                        ForumUpvotes = x.ForumUpvotes,
+                        ForumReplies = x.ForumReplies,
+                        IsLiked = _forumRepository.IsForumLiked(userId, x.Id).Result,
+                        ProfileImageUrl = _userManager.FindByIdAsync(x.UserId).Result.ProfileImageUrl
+                    });
+                    return Ok(new AuthResponseModel()
+                    {
+                        ResponseCode = ResponseCode.Ok,
+                        ResponseMessage = $"Most Recent {isChannelExists.ChannelName} Forums",
+                        DataSet = forumDTO
+                    });
+                }
+                else if(filter == "Unanswered")
+                {
+                    var forums = await _forumRepository.GetUnansweredByChannelId(ChannelId);
                     var forumDTO = forums.Select(x => new ForumDTO()
                     {
                         Id = x.Id,

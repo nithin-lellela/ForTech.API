@@ -15,6 +15,8 @@ namespace ForTech.Data.RepositoryInterfaces
         Task<List<Forum>> GetAllForumsByChannelId(Guid ChannelId);
         Task<List<Forum>> GetAllForumsByUserId(string UserId);
         Task<List<Forum>> GetTopForumsByChannelId(Guid ChannelId);
+        Task<List<Forum>> GetUnansweredByChannelId(Guid channelId);
+        Task<int> GetChannelForumsInteractions(Guid channelId);
         Task<Forum> UpdateForum(Forum Forum);
         Task<bool> DeleteForum(Guid Id);
         Task<Forum> UpdateUpvotes(Guid Id, bool isVoted);

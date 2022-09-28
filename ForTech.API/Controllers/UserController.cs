@@ -173,7 +173,6 @@ namespace ForTech.API.Controllers
             });
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("GetAllUsers")]
         public async Task<IActionResult> GetAllUsers()
         {
@@ -230,7 +229,6 @@ namespace ForTech.API.Controllers
             });
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("GetUser/{id}")]
         public async Task<IActionResult> GetUser(string id)
         {

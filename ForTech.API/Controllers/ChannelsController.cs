@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ForTech.API.Controllers
@@ -16,10 +17,12 @@ namespace ForTech.API.Controllers
     {
         private readonly IChannelRepository _channelRepo;
         private readonly UserManager<User> _userManager;
-        public ChannelsController(IChannelRepository channelRepository, UserManager<User> UserManager)
+        private readonly IForumRepository _forumRepository;
+        public ChannelsController(IChannelRepository channelRepository, UserManager<User> UserManager, IForumRepository forumRepository)
         {
             _channelRepo = channelRepository;   
             _userManager = UserManager;
+            _forumRepository = forumRepository;
         }
 
         [HttpPost("Create")]
@@ -159,6 +162,55 @@ namespace ForTech.API.Controllers
                 ResponseMessage = "Invalid User",
                 DataSet = null
             });
+        }
+
+        [HttpPut("UpdateChannelInteractions")]
+        public async Task<IActionResult> UpdateChannel()
+        {
+            var channels = await _channelRepo.GetAllChannels();
+            foreach(var channel in channels)
+            {
+                var channelInteractions = await _forumRepository.GetChannelForumsInteractions(channel.Id);
+                var updateChannel = new Channel()
+                {
+                    Id = channel.Id,
+                    ChannelName = channel.ChannelName,
+                    NoOfInteractions = channelInteractions
+                };
+                await _channelRepo.UpdateChannel(updateChannel);
+            }
+            return Ok(new AuthResponseModel()
+            {
+                ResponseCode= ResponseCode.Ok,
+                ResponseMessage = "Updated channel interactions",
+                DataSet = null
+            });
+            
+        }
+
+        [HttpGet("TopChannels")]
+        public async Task<IActionResult> GetTopChannels()
+        {
+            var channels = await _channelRepo.GetTopChannels();
+            channels.Reverse();
+            List<Channel> topChannels = new List<Channel>();
+            int count = 0;
+            foreach(var channel in channels)
+            {
+                if(count == 5)
+                {
+                    break;
+                }
+                topChannels.Add(channel);
+                count++;
+            }
+            return Ok(new AuthResponseModel()
+            {
+                ResponseCode = ResponseCode.Ok,
+                ResponseMessage = "Top 4 Channels",
+                DataSet = topChannels
+            });
+
         }
 
         [HttpDelete("DeleteUserFavourite/{userId}/{channelId}")]

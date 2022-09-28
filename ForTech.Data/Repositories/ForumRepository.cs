@@ -71,6 +71,18 @@ namespace ForTech.Data.Repositories
             return await _dbContext.Forum.Where(x => x.UserId == UserId).ToListAsync();
         }
 
+        public async Task<int> GetChannelForumsInteractions(Guid channelId)
+        {
+            var forums = await GetAllForumsByChannelId(channelId);
+            int score = 0;
+            foreach(Forum forum in forums)
+            {
+                score = score + 1;
+                score = score + forum.ForumReplies;
+            }
+            return score;
+        }
+
         public async Task<Forum> GetForum(Guid Id)
         {
             return await _dbContext.Forum.AsNoTracking().FirstOrDefaultAsync(x => x.Id == Id);
@@ -89,7 +101,13 @@ namespace ForTech.Data.Repositories
         public async Task<List<Forum>> GetTopForumsByChannelId(Guid ChannelId)
         {
             var forums = await GetAllForumsByChannelId(ChannelId);
-            forums = forums.OrderByDescending(x => x.ForumUpvotes).OrderByDescending(x => x.ForumReplies).ToList();
+            forums = forums.OrderBy(x => x.ForumReplies).ToList();
+            return forums;
+        }
+
+        public async Task<List<Forum>> GetUnansweredByChannelId(Guid channelId)
+        {
+            var forums = await _dbContext.Forum.AsNoTracking().Where(x => x.ForumReplies == 0).Where(x => x.ChannelId == channelId).ToListAsync();
             return forums;
         }
 

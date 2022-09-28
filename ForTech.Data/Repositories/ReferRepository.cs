@@ -36,6 +36,18 @@ namespace ForTech.Data.Repositories
             return refers;
         }
 
+        public async Task<bool> RemoveRefer(Guid id)
+        {
+            var refer = await _dbContext.Refers.FirstOrDefaultAsync(x => x.Id == id);
+            if(refer != null)
+            {
+                _dbContext.Refers.Remove(refer);
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
+
         public async Task<bool> UpdateIsOpenedRefer(Guid ReferId)
         {
             var refer = await _dbContext.Refers.FirstOrDefaultAsync(x => x.Id == ReferId);
@@ -51,6 +63,10 @@ namespace ForTech.Data.Repositories
                 ForumId = refer.ForumId,
                 DateCreated = refer.DateCreated,
                 IsReferOpened = true,
+                ForumUserId = refer.ForumUserId,
+                ForumUserName = refer.ForumUserName,
+                ChannelId = refer.ChannelId,
+                ChannelName = refer.ChannelName
             };
             _dbContext.Refers.Update(updatedRefer);
             await _dbContext.SaveChangesAsync();

@@ -37,17 +37,17 @@ namespace ForTech.Data.Repositories
 
         public async Task<List<Channel>> GetAllChannels()
         {
-            return await _dbContext.Channel.ToListAsync();
+            return await _dbContext.Channel.AsNoTracking().ToListAsync();
         }
 
         public async Task<List<UserFavouriteChannels>> GetAllUserFavouriteChannels(string Id)
         {
-            return await _dbContext.FavouriteChannels.Where(x => x.UserId == Id).ToListAsync();
+            return await _dbContext.FavouriteChannels.AsNoTracking().Where(x => x.UserId == Id).ToListAsync();
         }
 
         public async Task<Channel> GetChannel(Guid Id)
         {
-            return await _dbContext.Channel.FirstOrDefaultAsync(x => x.Id == Id);
+            return await _dbContext.Channel.AsNoTracking().FirstOrDefaultAsync(x => x.Id == Id);
         }
 
         public async Task<bool> IsChannelExists(string Name)
@@ -76,6 +76,18 @@ namespace ForTech.Data.Repositories
             var userChannels = await GetAllUserFavouriteChannels(Id);
             var channel = userChannels.FirstOrDefault(x => x.ChannelId == ChannelId);
             return channel;
+        }
+
+        public async Task<bool> UpdateChannel(Channel Channel)
+        {
+            _dbContext.Channel.Update(Channel);
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<List<Channel>> GetTopChannels()
+        {
+            return await _dbContext.Channel.AsNoTracking().OrderBy(x => x.NoOfInteractions).ToListAsync();
         }
     }
 }

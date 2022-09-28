@@ -18,9 +18,7 @@ namespace ForTech.API.Models.RequestDTOs
         public string Role { get; set; }
         [Required]
         public string City { get; set; }
-        [Required]
         public string Skills { get; set; }
-        [Required]
         public string PhoneNumber { get; set; }
         [Required]
         public string ProfileImageUrl { get; set; }

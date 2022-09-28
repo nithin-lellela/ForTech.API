@@ -16,5 +16,7 @@ namespace ForTech.Data.RepositoryInterfaces
         Task<UserFavouriteChannels> AddUserFavouriteChannel(UserFavouriteChannels Channel);
         Task<List<UserFavouriteChannels>> GetAllUserFavouriteChannels(string Id);
         Task<bool> RemoveUserFavouriteChannel(string Id, Guid ChannelId);
+        Task<bool> UpdateChannel(Channel Channel);
+        Task<List<Channel>> GetTopChannels();
     }
 }
